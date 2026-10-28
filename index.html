@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>San Diego Top Spots</title>
 
     <style>
@@ -147,6 +148,18 @@
             font-size: 12px;
         }
 
+        /* SONIC DVD SCREENSAVER */
+
+        #sonic {
+            position: fixed;
+            width: 100px;
+            height: auto;
+            left: 100px;
+            top: 100px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
         @media (max-width: 700px) {
             .page {
                 display: block;
@@ -169,6 +182,9 @@
 </head>
 
 <body>
+
+    <!-- SONIC RUNNING AROUND THE SCREEN -->
+    <img src="sonic.gif" id="sonic" alt="Sonic bouncing around">
 
     <header>
         <h1>San Diego Top Spots</h1>
@@ -256,8 +272,50 @@
         <p>Last updated October 2006. UNDER CONSTRUCTION 🚧</p>
     </footer>
 
+    <!-- KEEP YOUR ORIGINAL JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="main.js"></script>
+
+    <!-- SONIC BOUNCING ANIMATION -->
+    <script>
+        const sonic = document.getElementById("sonic");
+
+        let x = 100;
+        let y = 100;
+        let speedX = 3;
+        let speedY = 3;
+
+        function bounceSonic() {
+            const maxX = Math.max(0, window.innerWidth - sonic.offsetWidth);
+            const maxY = Math.max(0, window.innerHeight - sonic.offsetHeight);
+
+            x += speedX;
+            y += speedY;
+
+            if (x <= 0) {
+                x = 0;
+                speedX = Math.abs(speedX);
+            } else if (x >= maxX) {
+                x = maxX;
+                speedX = -Math.abs(speedX);
+            }
+
+            if (y <= 0) {
+                y = 0;
+                speedY = Math.abs(speedY);
+            } else if (y >= maxY) {
+                y = maxY;
+                speedY = -Math.abs(speedY);
+            }
+
+            sonic.style.left = x + "px";
+            sonic.style.top = y + "px";
+
+            requestAnimationFrame(bounceSonic);
+        }
+
+        bounceSonic();
+    </script>
 
 </body>
 </html>
